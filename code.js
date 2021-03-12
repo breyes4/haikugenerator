@@ -1,9 +1,21 @@
+
+let arrayList = [
+[],
+["yes","have", "hey"],
+["pizza", "random", "nature"],
+["banana", "supportive", "Attractive"],
+["ordinary", "execution", "disestablish"],
+["personality", "individual", "subterranean"],
+["responsibility", "accountability", "incomprehensible"],
+["artificiality", "decriminalization", "conceptualization"]
+
+
+
+
 var Studio = require('stdio');
 var RandomWord = require('random-words');
 var Syllable = require('syllable');
 var Request = require('rest-request');
-var RestAPI = new Request('https://api.datamuse.com');
-
 
 
 var commands = Studio.getopt({
@@ -23,7 +35,7 @@ var createRandomLine = function (syllableCount) {
 };
 
 
-var createLine = function (syllableCount, wordPool) {
+var createLine = function (syllableCount, arrayList) {
     if (syllableCount === void 0 || syllableCount !== parseInt(syllableCount, 10)) {
         syllableCount = 5;
     }
@@ -31,7 +43,7 @@ var createLine = function (syllableCount, wordPool) {
     var line = '';
     var totalSyllableCount = 0;
     do {
-        line += ' ' + wordPool[Math.floor(Math.random() * wordPool.length)].word;
+        line += ' ' + arrayList[Math.floor(Math.random() * arrayList.length)].word;
         totalSyllableCount = Syllable(line);
 
         if (totalSyllableCount > syllableCount) {
@@ -53,21 +65,21 @@ var randomHaiku = function () {
     console.log(haiku);
 };
 
-var haiku = function (mainWords) {
+var haiku = function (arrayList) {
 
-    RestAPI.get('/words', {rel_jja: mainWords, max: 100})
+    RestAPI.get('/words', {rel_jja: arrayList, max: 100})
         .then(
             function (words) {
                 // TODO: this can come back null, handle the error
-                var wordPool = words;
+                var arrayList = words;
 
                 /**
                  *
                  */
                 var haiku = [
-                    createLine(5, wordPool),
-                    createLine(7, wordPool),
-                    createLine(5, wordPool)
+                    createLine(5, arraylist),
+                    createLine(7, arrayList),
+                    createLine(5, arrayList)
                 ];
 
                 console.log(haiku);
